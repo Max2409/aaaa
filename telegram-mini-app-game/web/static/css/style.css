@@ -1,0 +1,331 @@
+body {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url('images/background.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.status-bar {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    width: 300px;
+}
+
+.level, .xp, .coins {
+    font-size: 18px;
+}
+
+.farm {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 10px; /* Уменьшил расстояние между грядками */
+    margin-top: 160px; /* Опустил грядки ниже */
+    max-width: 200px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.plot {
+    width: 100px;
+    height: 100px;
+    background-image: url('images/plots.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    position: relative;
+}
+
+.plot.active {
+    background-image: url('images/plots_active.png');
+}
+
+.plot img {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 80px;
+    height: 80px;
+}
+
+.plot .timer {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 3px 5px;
+    border-radius: 5px;
+}
+
+.controls {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.controls button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    transition: background-color 0.3s;
+    margin: 0 5px; /* Добавляем небольшие отступы между кнопками */
+}
+
+.controls button:hover {
+    background-color: #45a049;
+}
+
+.controls button.active {
+    background-color: #f44336; /* Цвет для активной кнопки */
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    background-image: url('images/shop_background.jpg');
+    background-size: cover;
+    position: relative;
+}
+
+.close-button {
+    color: #aaa;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.shop-items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+.shop-item {
+    display: flex;
+    align-items: center;
+    width: 45%;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.shop-item img {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.shop-item-price {
+    margin-right: 10px;
+    font-size: 14px;
+    color: #555;
+}
+
+.shop-item-button {
+    padding: 5px 10px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+}
+
+.shop-item-button:hover {
+    background-color: #45a049;
+}
+
+.plant-item img, .warehouse-item img {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.plant-item span, .warehouse-item span {
+    font-size: 14px;
+    color: #555;
+    margin-right: 10px;
+}
+
+.plant-item button, .shop-item-button {
+    padding: 5px 10px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+}
+
+.plant-item button:hover, .shop-item-button:hover {
+    background-color: #45a049;
+}
+
+.warehouse-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+/* Стили для уведомлений */
+.notification {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+.notification.show {
+    opacity: 1;
+}
+/* Новый блок с кнопками */
+.navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 200px;
+    margin-top: 10px;
+}
+
+.nav-button {
+    padding: 10px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.nav-button img {
+    width: 30px;
+    height: 30px;
+}
+
+/* Панель навигации */
+.navigation-bar {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50px;
+    padding: 5px;
+    display: flex;
+    justify-content: space-around; /* Изменить значение на space-around */
+    width: 100%;
+    max-width: 300px;
+    margin-top: 10px;
+}
+/* Вкладки магазина */
+.shop-tabs {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10px;
+}
+
+.shop-tab {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 5px 0;
+}
+
+.shop-tab:hover {
+    text-decoration: underline;
+}
+/* Кнопки "Купить" и "Продать" */
+.shop-tab {
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.shop-tab:hover {
+    background-color: darkgreen;
+}
+body.animals {
+    background-image: url('images/animals_background.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed; /* Добавить background-attachment: fixed */
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 150px;
+
+}
+/* Блок кнопок навигации */
+.navigation-bar {
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 300px;
+}
